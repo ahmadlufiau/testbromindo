@@ -1,99 +1,75 @@
-<!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+@section('content')
+<div class="container">
+    <?php
+    $admin = Auth::User()->isAdmin();
+    $user = Auth::user()->isUser();
+    ?>
+    <div class="row col-md-12 pb-4">
+        @if($admin == 1)
+        <a href="{{ route('ktp.create')}}" class="btn btn-info">Tambah Data</a>
+        <a href="#" class="btn btn-info ml-2">Export CSV</a>
+        <a href="#" class="btn btn-info ml-2">Export PDF</a>
+        @endif
+        @if($user == 1)
+        <a href="#" class="btn btn-info">Export CSV</a>
+        <a href="#" class="btn btn-info ml-2">Export PDF</a>
+        @endif
+	</div>
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                <th scope="col">NIK</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Tempat Tanggal Lahir</th>
+                                <th scope="col">Umur</th>
+                                <th scope="col">Jenis Kelamin</th>
+                                <th scope="col">Alamat</th>
+                                <th scope="col">Foto</th>
+                                <th scope="col">Options</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($ktp as $dataktp)
+                                <tr>
+                                <th scope="row">{{ $dataktp->nik }}</th>
+                                <td>{{ $dataktp->nama }}</td>
+                                <td>{{ $dataktp->tempatlahir }}, {{ App\Lib::convertdate($dataktp->tanggallahir)}}</td>
+                                <td>{{ $dataktp->age }} Tahun</td>
+                                <td>{{ App\Lib::gender($dataktp->jekel) }}</td>
+                                <td>{{ $dataktp->alamat }}</td>
+                                <td><img src="foto/sm-{{ $dataktp->foto }}"></td>
+                                @if($user == 1)
+                                <td>
+                                    <a class="btn btn-primary btn-xs" href="{{ route('ktp.show', $dataktp->nik) }}">Detail</a>
+                                </td>
+                                @endif
+                                @if($admin == 1)
+                                <td>
+                                    <form action="{{ route('ktp.destroy', $dataktp->nik) }}" method="post">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+                                        <a class="btn btn-warning btn-xs" href="{{ route('ktp.edit', $dataktp->nik) }}">Edit</a>
+                                        <a class="btn btn-primary btn-xs" href="{{ route('ktp.show', $dataktp->nik) }}">Detail</a>
+                                        <button class="btn btn-danger btn-xs" type="submit">Delete</button>
+                                    </form>
+                                </td>
+                                @endif
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </body>
-</html>
+    </div>
+</div>
+@endsection
