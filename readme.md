@@ -1,3 +1,5 @@
+<p align="center"><img src="https://raw.githubusercontent.com/ahmadlufiau/testbromindo/master/screenshoot/home.png"></p>
+
 ## Konfigurasi
 
 -   compooser install
