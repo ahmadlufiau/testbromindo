@@ -23,6 +23,13 @@ Route::get('logout', [
     'as'    => 'logout',
 ]);
 
+// export csv dan pdf
+Route::get('exportpdf', 'LaporanController@exportPdf')->name('laporan.exportpdf');
+Route::get('exportcsv', 'LaporanController@exportCsv')->name('laporan.exportcsv');
+// import csv
+Route::post('importcsv', 'LaporanController@importCsv')->name('laporan.importcsv');
+
+// CRUD KTP
 Route::get('/', 'KtpController@index')->name('ktp.index');
 Route::get('/create', 'KtpController@create')->name('ktp.create');
 Route::post('/', 'KtpController@store')->name('ktp.store');

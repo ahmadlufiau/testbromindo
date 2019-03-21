@@ -8,15 +8,28 @@
     ?>
     <div class="row col-md-12 pb-4">
         @if($admin == 1)
-        <a href="{{ route('ktp.create')}}" class="btn btn-info">Tambah Data</a>
-        <a href="#" class="btn btn-info ml-2">Export CSV</a>
-        <a href="#" class="btn btn-info ml-2">Export PDF</a>
+        <form class="form-inline" action="{{route('laporan.importcsv')}}" method="post" enctype="multipart/form-data">
+            <div class="col-md-7">
+                {{csrf_field()}}
+                <input type="file" name="imported-file"/>
+            </div class="col-md-2">
+            <button class="btn btn-info" type="submit">Import CSV</button>
+        </form>
+        <a href="{{route('laporan.exportcsv')}}" class="btn btn-info">Export CSV</a>
+        <a href="{{route('laporan.exportpdf')}}" class="btn btn-info ml-2">Export PDF</a>
+        <a href="{{ route('ktp.create')}}" class="btn btn-info ml-2">Tambah Data</a>
         @endif
         @if($user == 1)
-        <a href="#" class="btn btn-info">Export CSV</a>
-        <a href="#" class="btn btn-info ml-2">Export PDF</a>
+        <a href="{{route('laporan.exportcsv')}}" class="btn btn-info">Export CSV</a>
+        <a href="{{route('laporan.exportpdf')}}" class="btn btn-info ml-2">Export PDF</a>
         @endif
-	</div>
+    </div>
+    @if(Session::has('success'))
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert"></button>
+            {{Session::get('success')}}
+        </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
@@ -30,9 +43,6 @@
                                 <th scope="col">Nama</th>
                                 <th scope="col">Tempat Tanggal Lahir</th>
                                 <th scope="col">Umur</th>
-                                <th scope="col">Jenis Kelamin</th>
-                                <th scope="col">Alamat</th>
-                                <th scope="col">Foto</th>
                                 <th scope="col">Options</th>
                                 </tr>
                             </thead>
@@ -43,9 +53,6 @@
                                 <td>{{ $dataktp->nama }}</td>
                                 <td>{{ $dataktp->tempatlahir }}, {{ App\Lib::convertdate($dataktp->tanggallahir)}}</td>
                                 <td>{{ $dataktp->age }} Tahun</td>
-                                <td>{{ App\Lib::gender($dataktp->jekel) }}</td>
-                                <td>{{ $dataktp->alamat }}</td>
-                                <td><img src="foto/sm-{{ $dataktp->foto }}"></td>
                                 @if($user == 1)
                                 <td>
                                     <a class="btn btn-primary btn-xs" href="{{ route('ktp.show', $dataktp->nik) }}">Detail</a>
@@ -56,9 +63,9 @@
                                     <form action="{{ route('ktp.destroy', $dataktp->nik) }}" method="post">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
-                                        <a class="btn btn-warning btn-xs" href="{{ route('ktp.edit', $dataktp->nik) }}">Edit</a>
-                                        <a class="btn btn-primary btn-xs" href="{{ route('ktp.show', $dataktp->nik) }}">Detail</a>
-                                        <button class="btn btn-danger btn-xs" type="submit">Delete</button>
+                                        <a class="btn btn-warning btn-sm" href="{{ route('ktp.edit', $dataktp->nik) }}">Edit</a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('ktp.show', $dataktp->nik) }}">Detail</a>
+                                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
                                     </form>
                                 </td>
                                 @endif
@@ -66,6 +73,7 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        {{ $ktp->links() }}
                     </div>
                 </div>
             </div>

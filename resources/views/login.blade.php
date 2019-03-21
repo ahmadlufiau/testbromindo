@@ -8,9 +8,9 @@
     <title>Login Sistem</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/4.0/examples/sign-in/">
     <!-- Bootstrap core CSS -->
-    <link href="https://getbootstrap.com/docs/4.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="https://getbootstrap.com/docs/4.0/examples/sign-in/signin.css" rel="stylesheet">
+    <link href="{{ asset('css/signin.css') }}" rel="stylesheet">
 </head>
 <body class="text-center">
     <form class="form-signin" action="{{ route('postLogin') }}" method="post">

@@ -8,10 +8,22 @@ use App\Lib;
 
 class KtpController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
     }
+
+    private $rules = [
+        'nik' => ['required'],
+        'nama' => ['required'],
+        'tempatlahir' => ['required'],
+        'tanggallahir' => ['required'],
+        'jekel' => ['required'],
+        'alamat' => ['required'],
+        'agama' => ['required'],
+        'status' => ['required']
+    ];
 
     public $status = ['0' => 'Belum Kawin', '1' => 'Kawin'];
     public $jekel = ['0' => 'Laki-Laki', '1' => 'Perempuan'];
@@ -55,6 +67,7 @@ class KtpController extends Controller
     public function store(Request $request)
     {
         //
+        $this->validate($request, $this->rules);
         $ktp = new Ktp;
         $ktp->nik = '4674';
         $ktp->nama = $request->nama;
@@ -72,7 +85,7 @@ class KtpController extends Controller
             $ktp->foto = $filename;
         }
         $ktp->save();
-        return redirect('/');
+        return redirect('/')->with('success', 'Data Berhasil Disimpan');
     }
 
     /**
@@ -111,6 +124,7 @@ class KtpController extends Controller
     public function update(Request $request, $nik)
     {
         //
+        $this->validate($request, $this->rules);
         $ktp = Ktp::find($nik);
         $ktp->nik = '4674';
         $ktp->nama = $request->nama;
@@ -128,7 +142,7 @@ class KtpController extends Controller
             $ktp->foto = $filename;
         }
         $ktp->save();
-        return redirect('/');
+        return redirect('/')->with('success', 'Data Berhasil Diupdate');
     }
 
     /**
@@ -154,6 +168,6 @@ class KtpController extends Controller
             }
         }
         $ktp->delete();
-        return redirect('/');
+        return redirect('/')->with('success', 'Data Berhasil Dihapus');
     }
 }

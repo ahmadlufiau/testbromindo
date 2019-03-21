@@ -26,6 +26,11 @@
                                 <td>{{ $ktp->tempatlahir}}, {{ App\Lib::convertdate($ktp->tanggallahir)}}</td>
                             </tr>
                             <tr>
+                                <td>Umur</td>
+                                <td>:</td>
+                                <td>{{ $ktp->age }} Tahun</td>
+                            </tr>
+                            <tr>
                                 <td>Jenis Kelamin</td>
                                 <td>:</td>
                                 <td>{{ App\Lib::gender($ktp->jekel)}}</td>
@@ -48,7 +53,11 @@
                             <tr>
                                 <td>Foto</td>
                                 <td>:</td>
-                                <td><img src="foto/sm-{{ $ktp->foto }}"></td>
+                                @if($ktp->foto == NULL)
+                                    <td><img src="default/no_image.png" width="150px" height="150px"></td>
+                                @else
+                                    <td><img src="foto/sm-{{ $ktp->foto }}"></td>
+                                @endif
                             </tr>
                         </table>
                 </div>
