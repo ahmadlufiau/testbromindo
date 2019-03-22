@@ -33,7 +33,11 @@
                             <tr>
                                 <td>Jenis Kelamin</td>
                                 <td>:</td>
-                                <td>{{ App\Lib::gender($ktp->jekel)}}</td>
+                                @if($ktp->jekel == NULL)
+                                    <td> - </td>
+                                @else
+                                    <td>{{ App\Lib::gender($ktp->jekel) }}</td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>Alamat</td>
@@ -48,7 +52,11 @@
                             <tr>
                                 <td>Status</td>
                                 <td>:</td>
-                                <td>{{ App\Lib::status($ktp->status) }}</td>
+                                @if($ktp->status == NULL)
+                                    <td> - </td>
+                                @else
+                                    <td>{{ App\Lib::status($ktp->status) }}</td>
+                                @endif
                             </tr>
                             <tr>
                                 <td>Foto</td>

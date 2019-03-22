@@ -11,7 +11,7 @@
         <form class="form-inline" action="{{route('laporan.importcsv')}}" method="post" enctype="multipart/form-data">
             <div class="col-md-7">
                 {{csrf_field()}}
-                <input type="file" name="imported-file"/>
+                <input type="file" name="imported-file" required/>
             </div class="col-md-2">
             <button class="btn btn-info" type="submit">Import CSV</button>
         </form>

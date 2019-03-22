@@ -19,12 +19,16 @@
             <div class="card">
                 <div class="card-header">Tambah Data KTP</div>
                 <div class="card-body">
+                    <?php
+                    $faker = \Faker\Factory::create('id_ID');
+                    ?>
                     <form action="{{ route('ktp.store') }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <div class="form-row">
+                            <input type="hidden" name="nik" class="form-control" value="<?php echo $faker->nik() ?>" readonly>
                             <div class="form-group col-md-5">
                                 <label>Nama*</label>
-                                <input type="nama" name="nama" class="form-control" placeholder="Masukkan Nama">
+                                <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-control-label">Tempat Lahir*</label>

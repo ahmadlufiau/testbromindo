@@ -13,10 +13,11 @@
                     <form action="{{ route('ktp.update', $ktp->nik) }}" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
+                        <input type="hidden" class="form-control" name="nik" value="{{ $ktp->nik }}" readonly>
                         <div class="form-row">
                             <div class="form-group col-md-5">
                                 <label>Nama*</label>
-                                <input type="nama" name="nama" class="form-control" placeholder="Masukkan Nama" value="{{ $ktp->nama }}">
+                                <input type="text" name="nama" class="form-control" placeholder="Masukkan Nama" value="{{ $ktp->nama }}">
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="form-control-label">Tempat Lahir*</label>
@@ -62,7 +63,11 @@
                                 <label class="form-control-label">Foto</label>
                                 <input type="file" name="foto" class="form-control">
                             </div>
+                            @if($ktp->foto == NULL)
+                            <img src="{{ url('default/no_image.png') }}" width="150px" height="150px">
+                            @else
                             <img src="{{ url('foto', 'sm-'.$ktp->foto )}}">
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary">Simpan</button>
                     </form>

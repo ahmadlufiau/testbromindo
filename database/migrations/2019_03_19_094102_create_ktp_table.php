@@ -18,10 +18,10 @@ class CreateKtpTable extends Migration
             $table->string('nama');
             $table->string('tempatlahir');
             $table->date('tanggallahir');
-            $table->enum('jekel', ['0', '1']);
+            $table->enum('jekel', ['0', '1'])->nullable();
             $table->string('alamat');
             $table->string('agama');
-            $table->enum('status', ['0', '1']);
+            $table->enum('status', ['0', '1'])->nullable();
             $table->string('foto')->nullable();
             $table->timestamps();
         });

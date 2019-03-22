@@ -68,8 +68,9 @@ class KtpController extends Controller
     {
         //
         $this->validate($request, $this->rules);
+
         $ktp = new Ktp;
-        $ktp->nik = '4674';
+        $ktp->nik = $request->nik;
         $ktp->nama = $request->nama;
         $ktp->tempatlahir = $request->tempatlahir;
         $ktp->tanggallahir = $request->tanggallahir;
@@ -126,7 +127,7 @@ class KtpController extends Controller
         //
         $this->validate($request, $this->rules);
         $ktp = Ktp::find($nik);
-        $ktp->nik = '4674';
+        $ktp->nik = $request->nik;
         $ktp->nama = $request->nama;
         $ktp->tempatlahir = $request->tempatlahir;
         $ktp->tanggallahir = $request->tanggallahir;

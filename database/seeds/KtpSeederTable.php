@@ -13,7 +13,7 @@ class KtpSeederTable extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create('id_ID');
-        $jml_data = 50000;
+        $jml_data = 1000; //jumlah data
         for ($i = 1; $i <= $jml_data; $i++) {
             $ktp = new Ktp();
             $ktp->nik = $faker->nik;
@@ -24,7 +24,6 @@ class KtpSeederTable extends Seeder
             $ktp->alamat = $faker->address;
             $ktp->agama = $faker->randomElement($array = array('0', '1', '2', '3', '4', '5'));
             $ktp->status = $faker->randomElement($array = array('0', '1'));
-            //$ktp->foto = "sm-" . $faker->image($dir = 'public/foto', $width = 110, $height = 110);
             $ktp->save();
         }
     }

@@ -39,8 +39,20 @@
                 <td>{{ $dataktp->nama }}</td>
                 <td>{{ $dataktp->tempatlahir }}</td>
                 <td>{{ App\Lib::convertdate($dataktp->tanggallahir)}}</td>
-                <td>{{ App\Lib::gender($dataktp->jekel)}}</td>
-                <td>{{ App\Lib::status($dataktp->status)}}</td>
+                <td>
+                    @if($dataktp->jekel == NULL)
+                    -
+                    @else
+                    {{ App\Lib::gender($dataktp->jekel)}}
+                    @endif
+                </td>
+                <td>
+                    @if($dataktp->status == NULL)
+                    -
+                    @else
+                    {{ App\Lib::status($dataktp->status)}}
+                    @endif
+                </td>
                 <td>{{ App\Lib::agama($dataktp->agama)}}</td>
             </tr>
             @endforeach

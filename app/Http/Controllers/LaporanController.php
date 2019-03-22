@@ -45,9 +45,16 @@ class LaporanController extends Controller
     {
         // set limit memory (data yang diatas >40000)
         ini_set('memory_limit', '2048M');
+        ini_set('max_execution_time', 900);
         if ($request->file('imported-file')) {
             $path = $request->file('imported-file')->getRealPath();
-            $data = Excel::load($path, function ($reader) { })->get();
+            $myValueBinder = new MyValueBinderString;
+            $data = Excel::setValueBinder($myValueBinder)->load($path)->get();
+            // $data = Excel::load($path, function ($reader) {
+            //     $reader->sheet('Data KTP', function ($sheet) {
+            //            .....
+            //     });
+            // })->get();
 
             if (!empty($data) && $data->count()) {
                 foreach ($data->toArray() as $row) {

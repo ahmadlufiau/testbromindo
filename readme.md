@@ -4,7 +4,7 @@
 
 -   compooser install
 -   setting .env
--   import .sql atau bisa menggunakan migration 'php artisan migrate:refresh -seed'
+-   import .sql atau bisa menggunakan migration 'php artisan migrate -seed'
 -   php artisan serve
 
 ## Login
@@ -18,3 +18,7 @@ User
 
 -   email : user@gmail.com
 -   password : password
+
+## Sample File Import CSV
+
+Sample file import .csv ada pada folder screenshoot
