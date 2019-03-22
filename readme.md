@@ -4,7 +4,7 @@
 
 -   compooser install
 -   setting .env
--   import .sql atau bisa menggunakan migration 'php artisan migrate -seed'
+-   import .sql atau bisa menggunakan migration 'php artisan migrate --seed'
 -   php artisan serve
 
 ## Login
